@@ -1,82 +1,70 @@
 <template>
-    <label class="ui-checkbox" @dblclick="handle">
+    <label class="ui-checkbox">
         <input type="checkbox" :value="value" :checked="isChecked" :disabled="disabled" @change="toggle">
         <span class="ui-checkbox__view">
             <span class="ui-checkbox__marker" />
-            <span class="ui-checkbox__label">
-                <template v-if="$slots.default">
-                    <slot />
-                </template>
-                <template v-else>
-                    {{ label }}
-                </template>
-            </span>
+            <span class="ui-checkbox__label">{{ label }}</span>
         </span>
     </label>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-
-@Component({
+<script>
+export default {
     name: 'ui-checkbox',
+
     model: {
         prop: 'modelValue',
         event: 'change',
     },
-})
-export default class UiCheckbox extends Vue {
-    @Prop()
-    value!: string | number | boolean;
 
-    @Prop()
-    label!: string | number;
+    props: {
+        label: {
+            type: String,
+        },
+        value: {
+            type: [String, Boolean, Array],
+        },
+        modelValue: {
+            type: [String, Boolean, Array],
+            required: true,
+        },
+        disabled: {
+            type: Boolean,
+            default: () => false,
+        },
+    },
 
-    @Prop()
-    disabled!: boolean;
+    computed: {
+        isChecked() {
+            if (this.modelValue instanceof Array) {
+                return this.modelValue.includes(this.value);
+            }
+            return this.modelValue;
+        },
+    },
 
-    @Prop()
-    modelValue!: any;
-
-    get isChecked() {
-        if (Array.isArray(this.modelValue)) {
-            return this.modelValue.includes(this.value);
-        }
-        return this.modelValue;
-    }
-
-    toggle(event: any) {
-        if (this.disabled) {
-            return;
-        }
-
-        const isChecked = event.target.checked;
-
-        if (Array.isArray(this.modelValue)) {
-            let newValue = [...this.modelValue];
-
-            if (isChecked) {
-                newValue.push(this.value);
-            } else {
-                newValue.splice(newValue.indexOf(this.value), 1);
+    methods: {
+        toggle(event) {
+            if (this.disabled) {
+                return;
             }
 
-            this.$emit('change', newValue);
-        } else {
-            this.$emit('change', isChecked);
-        }
-    }
+            const isChecked = event.target.checked;
 
-    handle(event: any) {
-        if (!Array.isArray(this.modelValue)) {
-            return;
-        }
+            if (this.modelValue instanceof Array) {
+                let newValue = [...this.modelValue];
 
-        if (this.modelValue.length > 1 || (this.modelValue.length === 1 && !this.isChecked)) {
-            this.$emit('change', [this.value]);
-        } else {
-            // todo select all
-        }
-    }
-}
+                if (isChecked) {
+                    newValue.push(this.value);
+                } else {
+                    newValue.splice(newValue.indexOf(this.value), 1);
+                }
+
+                this.$emit('change', newValue);
+            } else {
+                this.$emit('change', isChecked);
+            }
+        },
+    },
+};
 </script>

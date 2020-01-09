@@ -46,8 +46,6 @@ export default {
                 delete props.link;
             }
 
-            console.log(props);
-
             return props;
         },
 
