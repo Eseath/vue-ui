@@ -75,6 +75,7 @@ export default {
             attrs: this.$attrs,
             class: this.classList,
             props: this.makeProperties(),
+            on: this.$listeners,
         }, [
             this.genIcon(h),
             buttonContent,
