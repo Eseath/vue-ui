@@ -70,16 +70,20 @@ export default {
     render(h) {
         const buttonElement = this.link ? 'router-link' : 'button';
         const buttonContent = this.label ? this.label : this.$slots.default;
+        const children = [];
+
+        if (this.icon) {
+            this.children.push(this.genIcon(h));
+        }
+
+        children.push(buttonContent);
 
         return h(buttonElement, {
             attrs: this.$attrs,
             class: this.classList,
             props: this.makeProperties(),
             on: this.$listeners,
-        }, [
-            this.genIcon(h),
-            buttonContent,
-        ]);
+        }, children);
     },
 };
 </script>
