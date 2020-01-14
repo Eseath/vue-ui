@@ -73,7 +73,7 @@ export default {
         const children = [];
 
         if (this.icon) {
-            this.children.push(this.genIcon(h));
+            children.push(this.genIcon(h));
         }
 
         children.push(buttonContent);
