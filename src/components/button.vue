@@ -30,7 +30,7 @@ export default {
         classList() {
             return [
                 'ui-button',
-                `--color-${this.color}`,
+                `--${this.color}`,
             ];
         },
     },
@@ -76,7 +76,10 @@ export default {
             children.push(this.genIcon(h));
         }
 
-        children.push(buttonContent);
+        if (buttonContent) {
+            const contentEl = h('span', [buttonContent]);
+            children.push(contentEl);
+        }
 
         return h(buttonElement, {
             attrs: this.$attrs,
