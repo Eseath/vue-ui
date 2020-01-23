@@ -17,6 +17,9 @@ export default {
         href: {
             type: String,
         },
+        size: {
+            type: String,
+        },
         color: {
             type: String,
         },
@@ -24,14 +27,24 @@ export default {
             type: Boolean,
             default: () => false,
         },
+        inverted: {
+            type: Boolean,
+            default: () => false,
+        },
     },
 
     computed: {
         classList() {
-            return [
+            const classes = [
                 'ui-button',
-                `--${this.color}`,
             ];
+
+            this.color    && classes.push(`--${this.color}`);
+            this.size     && classes.push(`--${this.size}`);
+            this.inverted && classes.push('--invert');
+            this.loading  && classes.push('--not-clickable');
+
+            return classes;
         },
     },
 
