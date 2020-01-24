@@ -10,6 +10,7 @@
                         <th>С белым фоном</th>
                         <th>Неактивная c белым фоном</th>
                         <th />
+                        <th>Круглая</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,6 +21,7 @@
                         <td><ui-button :color="color" label="Это кнопка" inverted /></td>
                         <td><ui-button :color="color" label="Это кнопка" inverted disabled /></td>
                         <td><ui-button :loading="true" label="Loading" /></td>
+                        <td><ui-button label="Loading" round /></td>
                     </tr>
                 </tbody>
             </table>

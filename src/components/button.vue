@@ -31,6 +31,10 @@ export default {
             type: Boolean,
             default: () => false,
         },
+        round: {
+            type: Boolean,
+            default: () => false,
+        },
     },
 
     computed: {
@@ -42,6 +46,7 @@ export default {
             this.color    && classes.push(`--${this.color}`);
             this.size     && classes.push(`--${this.size}`);
             this.inverted && classes.push('--invert');
+            this.round    && classes.push('--round');
             this.loading  && classes.push('--not-clickable');
 
             return classes;
