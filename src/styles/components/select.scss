@@ -1,0 +1,187 @@
+.ui-select {
+    &__field {
+        background: #eaecf2;
+        border: 1px solid #eaecf2;
+        position: relative;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 12px;
+        border-radius: 3px;
+        height: 38px;
+        transition: border-color .1s ease;
+        min-width: 60px;
+        width: 100%;
+        max-width: 100%;
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+            //
+        }
+
+        &:focus {
+            //
+        }
+    }
+
+    &__field.active &__arrow {
+        transform: scaleY(-1);
+    }
+
+    select {
+        border: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        opacity: 0;
+        cursor: pointer;
+        display: none;
+    }
+
+    &__value {
+        transition: color .2s ease;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        pointer-events: none;
+        color: #6a7c93;
+        width: 100%;
+    }
+
+    &__arrow {
+        color: #41495d;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all .2s ease;
+    }
+
+    &__hint {
+        position: absolute;
+        top: 10px;
+        will-change: transform;
+        pointer-events: none;
+        z-index: 9200;
+        max-width: 100%;
+    }
+
+    &__window {
+        background: #4e627e;
+        color: #fff;
+        border-radius: 3px;
+        box-shadow: 0 0 10px rgba(50, 50, 50, .1), 0 15px 40px -7px rgba(50, 50, 50, .2);
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .2s ease,visibility .2s ease;
+
+        &-header {
+            padding: 13px 15px;
+            border-bottom: 1px solid #43546d;
+        }
+
+        &:after {
+            background: #4c607dfc;
+            border-radius: 2px;
+            bottom: 100%;
+            left: 50%;
+            content: " ";
+            position: absolute;
+            pointer-events: none;
+            //border: 4px solid rgba(136, 183, 213, 0);
+            //border-bottom-color: #4c607dfc;
+            margin-bottom: -5px;
+            margin-left: -4px;
+            width: 8px;
+            height: 8px;
+            z-index: -1;
+            transform: rotate(-45deg);
+        }
+
+        ul {
+            list-style: none;
+            position: relative;
+            max-height: 256px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0;
+            padding: 0;
+
+            & > li {
+                border-bottom: 1px solid #43546d;
+                display: block;
+                padding: 15px;
+                cursor: pointer;
+                transition: background .2s ease,color .2s ease;
+                user-select: none;
+
+                &:hover {
+                    background: #475872;
+                }
+
+                &:last-child {
+                    border: none;
+                }
+            }
+        }
+
+        input {
+            border: 0;
+            border-radius: 2px;
+            padding: 8px 10px;
+            font-size: 14px;
+            box-sizing: border-box;
+            width: 100%;
+            background: #39475c;
+            box-shadow: inset 0 -1px 4px rgba(0, 0, 0, .08);
+            color: #fff;
+        }
+    }
+}
+
+.ui-select__hint.shown {
+    pointer-events: unset;
+}
+
+.ui-select__hint.shown .ui-select__window {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ui-select__window .ui-select__scroller-down.hide,
+.ui-select__window .ui-select__scroller-up.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.ui-select__window .ui-select__scroller-down,
+.ui-select__window .ui-select__scroller-up {
+    background: rgba(106, 124, 147, .5);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+    display: block;
+    width: 45px;
+    height: 4px;
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    pointer-events: none;
+    opacity: 1;
+    visibility: visible;
+    transition: all .2s ease;
+    z-index: 1;
+}
+
+.ui-select__window .ui-select__scroller-up {
+    top: 7px;
+}
+
+.ui-select__window .ui-select__scroller-down {
+    bottom: 7px;
+}

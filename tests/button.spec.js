@@ -6,7 +6,7 @@ describe('Button', () => {
         stubs: ['ui-icon'],
     });
 
-    it('', () => {
+    it('Should not render icon slot if icon is not specified', () => {
         //
     });
 });

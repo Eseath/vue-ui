@@ -1,12 +1,14 @@
 body {
     font-family: 'Roboto', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 300;
     line-height: 1.5;
+    margin: 0;
+    padding: 0;
 }
 
-@import "components/checkbox";
+section {
+    margin: 0 0 60px;
+}
 
-@import "../../../node_modules/prismjs/themes/prism.css";
-@import "../../../node_modules/prismjs/themes/prism-solarizedlight.css";
-@import "../../../node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css";
+@import '../../../src/styles/main';

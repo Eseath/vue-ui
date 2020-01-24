@@ -1,0 +1,107 @@
+@import '../mixins';
+
+.ui-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    height: 38px;
+    box-sizing: border-box;
+    background: color('secondary-light');
+    border: 1px solid color('secondary-light');
+    color: color('secondary-dark');
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    //line-height: 20px;
+    font-family: Ubuntu,sans-serif;
+    white-space: nowrap;
+    vertical-align: middle;
+    transition: all .1s ease, margin 0s;
+    text-decoration: none!important;
+    user-select: none;
+
+    &:hover {
+        background: color('secondary');
+        border-color: color('secondary');
+        color: color('secondary-dark');
+    }
+
+    &:focus {
+        @extend :hover;
+        outline: none;
+    }
+
+    &[disabled], &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    &.--light {
+        &:hover {
+            background: color('secondary-light');
+            border-color: color('secondary-dark');
+        }
+    }
+
+    .ui-icon {
+        font-size: 18px;
+        margin-right: 5px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        .ui-spinner {
+            --size: 18px;
+            --border-size: 2px;
+        }
+    }
+
+    $themes: (primary, danger, warning, success, info);
+
+    @each $theme in $themes {
+        &.--#{$theme} {
+            background: color(#{$theme});
+            border-color: color(#{$theme});
+            color: white;
+
+            &:hover {
+                background: color(#{$theme}-dark);
+                border-color: color(#{$theme}-dark);
+            }
+
+            &.--light {
+                background: color(#{$theme}-light);
+                border-color: color(#{$theme}-light);
+                color: color(#{$theme});
+
+                &:hover {
+                    border-color: color(#{$theme});
+                }
+            }
+
+            &.--invert {
+                background: transparent;
+                border-color: color(#{$theme});
+                color: color(#{$theme});
+
+                &:hover {
+                    background: color(#{$theme});
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+.btn-group {
+    display: inline-flex;
+    margin: 0 -5px;
+
+    .ui-button {
+        margin: 0 5px;
+    }
+}

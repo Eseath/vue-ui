@@ -1,0 +1,27 @@
+@import 'variables';
+
+@mixin media-landscape {
+    @media only screen and (orientation: landscape) {
+        @content;
+    }
+}
+
+@mixin media-max($name, $breakpoints: $media-breakpoints) {
+    $width: map-get($breakpoints, $name);
+
+    @media only screen and (max-width: $width - 1) {
+        @content;
+    }
+}
+
+@mixin media-min($name, $breakpoints: $media-breakpoints) {
+    $width: map-get($breakpoints, $name);
+
+    @media only screen and (min-width: $width) {
+        @content;
+    }
+}
+
+@function color($name) {
+    @return map-get($main-colors, $name);
+}

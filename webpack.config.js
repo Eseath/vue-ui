@@ -2,7 +2,7 @@ const { resolve } = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const config = {
-    entry: './examples/index.ts',
+    entry: './examples/index.js',
 
     output: {
         path: resolve(__dirname, 'dist'),
