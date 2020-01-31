@@ -22,10 +22,10 @@ export default {
             type: String,
         },
         value: {
-            type: [String, Boolean, Array],
+            type: [Number, String, Boolean, Array],
         },
         modelValue: {
-            type: [String, Boolean, Array],
+            type: [Number, String, Boolean, Array],
             required: true,
         },
         disabled: {
