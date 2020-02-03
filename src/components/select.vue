@@ -79,17 +79,26 @@ export default {
             type: Boolean,
             default: () => false,
         },
+        placeholder: {
+            type: [String, Number],
+            default: () => '',
+        },
     },
 
     data: () => ({
         shown: false,
-        selectedValue: null,
         margins: 0,
     }),
 
+    computed: {
+        selectedValue() {
+            const selectedItem = this.options.find(option => option.id === this.value);
+            return selectedItem ? selectedItem.label : this.placeholder;
+        },
+    },
+
     methods: {
         clearValue() {
-            this.selectedValue = '';
             this.$emit('change', null);
         },
 
@@ -112,8 +121,6 @@ export default {
         },
 
         select(option) {
-            this.selectedValue = option.label;
-
             this.$emit('change', option.id);
             this.$emit('selected', option);
 

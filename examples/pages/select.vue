@@ -2,13 +2,13 @@
     <div style="margin: 60px auto; width: 720px;">
         <section>
             <h2>Стандартный</h2>
-            <ui-select v-model="model1" :options="options" />
+            <ui-select v-model="model1" :options="options" placeholder="Выберите что-то" />
             <p>Выбранное значение: {{ model1 }}</p>
         </section>
 
         <section>
             <h2>С поисковой строкой</h2>
-            <ui-select :options="options" searchable @selected="selectValue2" />
+            <ui-select v-model="model2" :options="options" searchable @selected="selectValue2" />
             <p>Выбранное значение из события: {{ selectedValue2 }}</p>
         </section>
 
@@ -78,6 +78,7 @@ export default {
         ],
 
         model1: null,
+        model2: null,
 
         selectedValue2: null,
     }),
