@@ -1,5 +1,5 @@
 <template>
-    <label class="ui-checkbox">
+    <label class="ui-checkbox" @dblclick="selectThisOnly">
         <input type="checkbox" :value="value" :checked="isChecked" :disabled="disabled" @change="toggle">
         <span class="ui-checkbox__view">
             <span class="ui-checkbox__marker" />
@@ -63,6 +63,12 @@ export default {
                 this.$emit('change', newValue);
             } else {
                 this.$emit('change', isChecked);
+            }
+        },
+
+        selectThisOnly() {
+            if (this.modelValue instanceof Array) {
+                this.$emit('change', [this.value]);
             }
         },
     },

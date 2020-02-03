@@ -23,6 +23,8 @@ export default {
 
         if (this.name.indexOf('el-icon') === 0) {
             classList.push(this.name);
+        } else if (this.name.indexOf('fa-') === 0) {
+            classList.push('fa', this.name);
         } else {
             childrenElements.push(h('svg', [
                 h('use', {

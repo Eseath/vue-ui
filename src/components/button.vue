@@ -1,5 +1,6 @@
 <script>
 import UiSpinner from './spinner';
+import UiIcon from './icon';
 
 export default {
     name: 'ui-button',
@@ -76,11 +77,10 @@ export default {
                 ]);
             }
 
-            return h('span', {
-                class: [
-                    'ui-icon',
-                    this.icon,
-                ],
+            return h(UiIcon, {
+                props: {
+                    name: this.icon,
+                },
             });
         },
     },
