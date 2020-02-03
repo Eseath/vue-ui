@@ -8,6 +8,8 @@
             {{ selectedValue }}
         </div>
 
+        <ui-icon name="el-icon-circle-close" @click.native.stop="clearValue" />
+
         <div class="ui-select__arrow">
             <ui-icon name="el-icon-arrow-down" />
         </div>
@@ -86,6 +88,11 @@ export default {
     }),
 
     methods: {
+        clearValue() {
+            this.selectedValue = '';
+            this.$emit('change', null);
+        },
+
         show() {
             this.shown = true;
 
