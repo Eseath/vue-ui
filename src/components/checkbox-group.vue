@@ -25,7 +25,9 @@ export default {
 
     methods: {
         registerItem(item) {
-            this.items.push(item);
+            if (item.modelValue instanceof Array) {
+                this.items.push(item);
+            }
         },
         unregisterItem(item) {
             const index = this.items.indexOf(item);
