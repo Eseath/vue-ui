@@ -28,11 +28,11 @@
             <h2>Группа чекбоксов</h2>
             <ui-checkbox-group>
                 <ui-checkbox v-model="example4AllChecked" label="Выбрать все" />
-                <ui-checkbox v-model="example3" label="F1" value="F1" />
-                <ui-checkbox v-model="example3" label="F2" value="F2" />
-                <ui-checkbox v-model="example3" label="F3" value="F3" />
+                <ui-checkbox v-model="example4" label="F1" value="F1" />
+                <ui-checkbox v-model="example4" label="F2" value="F2" />
+                <ui-checkbox v-model="example4" label="F3" value="F3" />
             </ui-checkbox-group>
-            <p>Значение: {{ example3 }}</p>
+            <p>Значение: {{ example4 }}</p>
         </section>
     </div>
 </template>
