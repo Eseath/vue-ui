@@ -9,8 +9,26 @@
 </template>
 
 <script>
+function inject(namespace) {
+    return {
+        inject: {
+            [namespace]: {
+                default: {
+                    registerItem: () => '',
+                    unregisterItem: () => '',
+                    selectAll: () => '',
+                },
+            },
+        },
+    };
+}
+
 export default {
     name: 'ui-checkbox',
+
+    mixins: [
+        inject('group'),
+    ],
 
     model: {
         prop: 'modelValue',
@@ -26,7 +44,6 @@ export default {
         },
         modelValue: {
             type: [Number, String, Boolean, Array],
-            required: true,
         },
         disabled: {
             type: Boolean,
@@ -44,6 +61,16 @@ export default {
     },
 
     methods: {
+        select() {
+            if (this.modelValue instanceof Array) {
+                let newValue = [...this.modelValue];
+
+                newValue.push(this.value);
+
+                this.$emit('change', newValue);
+            }
+        },
+
         toggle(event) {
             if (this.disabled) {
                 return;
@@ -68,9 +95,27 @@ export default {
 
         selectThisOnly() {
             if (this.modelValue instanceof Array) {
-                this.$emit('change', [this.value]);
+                if (this.modelValue.length > 1 || this.modelValue.indexOf(this.value) === -1) {
+                    this.$emit('change', [this.value]);
+                } else if (this.group) {
+                    this.group.selectAll((values) => {
+                        this.$emit('change', values);
+                    });
+                }
             }
         },
+    },
+
+    created() {
+        if (this.group) {
+            this.group.registerItem(this);
+        }
+    },
+
+    beforeDestroy() {
+        if (this.group) {
+            this.group.unregisterItem(this);
+        }
     },
 };
 </script>

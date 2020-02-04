@@ -6,6 +6,7 @@ import PageExampleSelect from './pages/select';
 import PageExampleButton from './pages/button';
 import PageExampleInput from './pages/input';
 import PageExampleToggle from './pages/toggle';
+import PageExampleCheckbox from './pages/checkbox';
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,10 @@ const router = new VueRouter({
         {
             path: '/components/toggle',
             component: PageExampleToggle,
+        },
+        {
+            path: '/components/checkbox',
+            component: PageExampleCheckbox,
         },
     ],
 });
