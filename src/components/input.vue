@@ -3,7 +3,7 @@
 <!--        <div class="input__icon &#45;&#45;left">-->
 <!--            <span class="icon"><svg><use xlink:href="#clock" /></svg></span>-->
 <!--        </div>-->
-        <input v-on="$listeners" v-bind="$attrs" @input="$emit('change', $event.target.value)">
+        <input v-bind="$attrs" @input="handleInput">
     </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
 
     model: {
         prop: 'value',
-        event: 'change',
+        event: 'input',
     },
 
     props: {
@@ -43,6 +43,12 @@ export default {
 
         iconPosition() {
             return typeof this.icon === 'string' ? 'left' : this.icon.position;
+        },
+    },
+
+    methods: {
+        handleInput(event) {
+            this.$emit('input', event.target.value);
         },
     },
 };
