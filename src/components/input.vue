@@ -3,7 +3,7 @@
 <!--        <div class="input__icon &#45;&#45;left">-->
 <!--            <span class="icon"><svg><use xlink:href="#clock" /></svg></span>-->
 <!--        </div>-->
-        <input v-bind="$attrs" @input="handleInput">
+        <input v-bind="$attrs" :value="value" @input="handleInput">
     </div>
 </template>
 
