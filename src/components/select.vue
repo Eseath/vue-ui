@@ -8,7 +8,7 @@
             {{ selectedValue }}
         </div>
 
-        <ui-icon name="el-icon-circle-close" @click.native.stop="clearValue" />
+        <ui-icon v-if="isClearable" name="el-icon-circle-close" @click.native.stop="clearValue" />
 
         <div class="ui-select__arrow">
             <ui-icon name="el-icon-arrow-down" />
@@ -73,15 +73,19 @@ export default {
         },
         multiple: {
             type: Boolean,
-            default: () => false,
+            default: false,
         },
         searchable: {
             type: Boolean,
-            default: () => false,
+            default: false,
         },
         placeholder: {
             type: [String, Number],
-            default: () => '',
+            default: '',
+        },
+        clearable: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -94,6 +98,9 @@ export default {
         selectedValue() {
             const selectedItem = this.options.find(option => option.id === this.value);
             return selectedItem ? selectedItem.label : this.placeholder;
+        },
+        isClearable() {
+            return this.clearable && this.selectedValue;
         },
     },
 

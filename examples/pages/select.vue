@@ -16,6 +16,11 @@
             <h2>С подсказками</h2>
             <ui-select :options="optionsWithHints" />
         </section>
+
+        <section>
+            <h2>Очищаемый</h2>
+            <ui-select :options="optionsWithHints" clearable />
+        </section>
     </div>
 </template>
 
