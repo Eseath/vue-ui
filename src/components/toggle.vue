@@ -26,6 +26,14 @@ export default {
             type: Boolean,
             default: false,
         },
+        positiveValue: {
+            type: [String, Number, Boolean],
+            default: true,
+        },
+        negativeValue: {
+            type: [String, Number, Boolean],
+            default: false,
+        },
     },
 
     computed: {
@@ -64,12 +72,12 @@ export default {
                 return;
             }
 
-            if (this.value === true) {
-                this.$emit('input', false);
-            } else if (this.value === false && this.nullable) {
+            if (this.value === this.positiveValue) {
+                this.$emit('input', this.negativeValue);
+            } else if (this.value === this.negativeValue && this.nullable) {
                 this.$emit('input', null);
             } else {
-                this.$emit('input', true);
+                this.$emit('input', this.positiveValue);
             }
         },
     },
