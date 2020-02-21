@@ -2,7 +2,7 @@
     <div style="margin: 60px auto; width: 720px;">
         <section>
             <h2>Стандартный</h2>
-            <ui-select v-model="model1" :options="options" placeholder="Выберите что-то" />
+            <ui-select v-model="model1" :options="options" value="test" placeholder="Выберите что-то" />
             <p>Выбранное значение: {{ model1 }}</p>
         </section>
 
@@ -21,6 +21,12 @@
             <h2>Очищаемый</h2>
             <ui-select :options="optionsWithHints" clearable />
         </section>
+
+        <section>
+            <h2>С мультивыбором</h2>
+            <ui-select v-model="model3" :options="options" multiple clearable />
+            {{ model3 }}
+        </section>
     </div>
 </template>
 
@@ -37,46 +43,46 @@ export default {
     data: () => ({
         options: [
             {
-                id: 1,
+                value: 1,
                 label: 'Фрукты и овощи',
             },
             {
-                id: 2,
+                value: 2,
                 label: 'Молочные продукты',
             },
             {
-                id: 3,
+                value: 3,
                 label: 'Рыба и мясо',
             },
             {
-                id: 4,
+                value: 4,
                 label: 'Соки и вода',
             },
             {
-                id: 5,
+                value: 5,
                 label: 'Алгокольные напитки',
             },
             {
-                id: 6,
+                value: 6,
                 label: 'Газированные напитки',
             },
             {
-                id: 7,
+                value: 7,
                 label: 'Десерты',
             },
             {
-                id: 8,
+                value: 8,
                 label: 'Хлебобулочные изделия',
             },
         ],
         optionsWithHints: [
             {
-                id: 1,
+                value: 1,
                 label: 'Фрукты и овощи',
                 description: 'Lorem ipsum dolor acsuba forever mofra qubearche',
             },
             {
-                id: 2,
+                value: 2,
                 label: 'Молочные продукты',
                 description: 'Lorem ipsum dolor acsuba forever mofra qubearche',
             },
@@ -84,6 +90,7 @@ export default {
 
         model1: null,
         model2: null,
+        model3: [],
 
         selectedValue2: null,
     }),
