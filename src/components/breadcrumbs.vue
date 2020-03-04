@@ -2,9 +2,14 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumbs">
             <li v-for="(item, index) in items" :key="index" class="breadcrumbs-item">
-                <router-link :to="item.link">
-                    {{ item.name }}
-                </router-link>
+                <template v-if="item.link">
+                    <router-link :to="item.link">
+                        {{ item.name }}
+                    </router-link>
+                </template>
+                <template v-else>
+                    <span>{{ item.name }}</span>
+                </template>
             </li>
         </ol>
     </nav>
