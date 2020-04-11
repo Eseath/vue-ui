@@ -1,16 +1,18 @@
 <template>
-    <div ref="element" :class="['ui-select', 'ui-select__field', 'closed', { 'active': shown }]" @click="toggle">
+    <div ref="element" :class="rootClasses" @click="toggle" @mouseover="hovered = true" @mouseout="hovered = false">
         <select :multiple="multiple">
             <option v-for="option in options" :key="option.id">{{ option.label }}</option>
         </select>
 
         <div class="ui-select__value">
-            {{ selectedValue }}
+            {{ text }}
         </div>
 
-        <ui-icon v-if="isClearable" name="el-icon-circle-close" @click.native.stop="clearValue" />
+        <div v-if="isClearable && hovered" class="ui-select__reset">
+            <ui-icon name="el-icon-circle-close" @click.native.stop="clearValue" />
+        </div>
 
-        <div class="ui-select__arrow">
+        <div v-else class="ui-select__arrow">
             <ui-icon name="el-icon-arrow-down" />
         </div>
 
@@ -101,23 +103,43 @@ export default {
     data: () => ({
         shown: false,
         margins: 0,
+        hovered: false,
     }),
 
     computed: {
-        selectedValue() {
+        selectedValues() {
             if (this.multiple && Array.isArray(this.value)) {
                 return this.value
                     .map(value => (this.options.find(option => option.value == value) || {}).label)
-                    .filter(value => value)
-                    .join(', ');
+                    .filter(value => value);
             }
 
-            const selectedItem = this.options.find(option => option.value === this.value);
+            const value = this.options.find(option => option.value === this.value);
 
-            return selectedItem ? selectedItem.label : this.placeholder;
+            return value ? [value] : [];
+        },
+        text() {
+            if (!this.selectedValues.length) {
+                return this.placeholder;
+            }
+            return this.multiple ? this.selectedValues.join(', ') : this.selectedValues[0].label;
         },
         isClearable() {
-            return this.clearable && this.selectedValue;
+            return this.clearable && this.selectedValues.length;
+        },
+        isSelected() {
+            return this.selectedValues.length > 0;
+        },
+        rootClasses() {
+            return [
+                'ui-select',
+                'ui-select__field',
+                'closed',
+                {
+                    'active': this.shown,
+                    '--selected': this.isSelected,
+                },
+            ];
         },
     },
 

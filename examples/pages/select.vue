@@ -24,7 +24,7 @@
 
         <section>
             <h2>С мультивыбором</h2>
-            <ui-select v-model="model3" :options="options" multiple clearable />
+            <ui-select v-model="model3" :options="options" placeholder="Сделайте выбор..." multiple clearable />
             {{ model3 }}
         </section>
     </div>
