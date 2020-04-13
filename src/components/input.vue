@@ -1,17 +1,24 @@
 <template>
     <div class="input">
-<!--        <div class="input__icon &#45;&#45;left">-->
-<!--            <span class="icon"><svg><use xlink:href="#clock" /></svg></span>-->
-<!--        </div>-->
+        <div v-if="icon" class="input__icon --right">
+            <ui-icon v-if="iconName" :name="iconName" />
+            <span v-else>{{ iconText }}</span>
+        </div>
         <input v-bind="$attrs" :value="value" @input="handleInput">
     </div>
 </template>
 
 <script>
+import UiIcon from './icon';
+
 export default {
     name: 'ui-input',
 
     inheritAttrs: false,
+
+    components: {
+        UiIcon,
+    },
 
     model: {
         prop: 'value',
@@ -39,6 +46,10 @@ export default {
 
         iconName() {
             return typeof this.icon === 'string' ? this.icon : this.icon.name;
+        },
+
+        iconText() {
+            return typeof this.icon === 'string' ? null : this.icon.text;
         },
 
         iconPosition() {

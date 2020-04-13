@@ -7,25 +7,21 @@
         </section>
 
         <section>
-            <h2>С поисковой строкой</h2>
-            <ui-select v-model="model2" :options="options" searchable @selected="selectValue2" />
-            <p>Выбранное значение из события: {{ selectedValue2 }}</p>
-        </section>
-
-        <section>
             <h2>С подсказками</h2>
-            <ui-select :options="optionsWithHints" />
+            <ui-select v-model="model2" :options="optionsWithHints" />
+            {{ model2 }}
         </section>
 
         <section>
             <h2>Очищаемый</h2>
-            <ui-select :options="optionsWithHints" clearable />
+            <ui-select v-model="model3" :options="optionsWithHints" clearable />
+            {{ model3 }}
         </section>
 
         <section>
             <h2>С мультивыбором</h2>
-            <ui-select v-model="model3" :options="options" placeholder="Сделайте выбор..." multiple clearable />
-            {{ model3 }}
+            <ui-select v-model="model4" :options="options" placeholder="Сделайте выбор..." multiple clearable />
+            {{ model4 }}
         </section>
     </div>
 </template>
@@ -87,18 +83,10 @@ export default {
                 description: 'Lorem ipsum dolor acsuba forever mofra qubearche',
             },
         ],
-
         model1: null,
         model2: null,
-        model3: [],
-
-        selectedValue2: null,
+        model3: null,
+        model4: [],
     }),
-
-    methods: {
-        selectValue2(value) {
-            this.selectedValue2 = value;
-        },
-    },
 };
 </script>

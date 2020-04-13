@@ -16,51 +16,14 @@
             <ui-icon name="el-icon-arrow-down" />
         </div>
 
-        <div ref="hint" class="ui-select__hint" :class="{ 'hidden': !shown, 'shown': shown }">
-            <div ref="hintWindow" class="ui-select__window" style="min-width: 200px;">
-                <div v-if="searchable" class="ui-select__window-header">
-                    <input type="search" />
-                </div>
-                <div class="ui-select__window-body" style="position: relative;">
-                    <span ref="scrollerUp" class="ui-select__scroller-up hide" />
-                    <ul ref="hintBody">
-                        <li v-for="option in options" :key="option.id" @click="select(option)">
-                            <div class="ui-select__option-title" style="display: flex; justify-content: space-between;">
-                                {{ option.label }}
-                                <div v-if="isOptionSelected(option)" class="checkmark" />
-                            </div>
-                            <div v-if="option.description" class="ui-select__option-description">
-                                {{ option.description }}
-                            </div>
-                        </li>
-                    </ul>
-                    <span ref="scrollerDown" class="ui-select__scroller-down hide" />
-                </div>
-            </div>
-        </div>
+        <select-dropdown ref="hint" :class="{ hidden: !shown, shown }" :options="options" @select="select" />
     </div>
 </template>
 
 <script>
 import UiIcon from './icon';
-
-function offset(el) {
-    let rect = el.getBoundingClientRect(),
-        scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
-        scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
-}
-
-/**
- * Checks that clicked to specified element.
- *
- * @param  {HTMLElement}  el      Needed element
- * @param  {HTMLElement}  target  Clicked element
- * @return {boolean}
- */
-function checkElClick(el, target) {
-    return target === el || el.contains(target);
-}
+import SelectDropdown from './select/select-dropdown.vue';
+import { checkElClick } from '../utils/dom';
 
 export default {
     name: 'ui-select',
@@ -72,6 +35,7 @@ export default {
 
     components: {
         UiIcon,
+        SelectDropdown,
     },
 
     props: {
@@ -146,12 +110,7 @@ export default {
     methods: {
         show() {
             this.shown = true;
-
-            this.calculatePosition();
-
-            if (this.searchable) {
-                setTimeout(() => this.$refs.hint.querySelector('input').focus(), 50);
-            }
+            this.$refs.hint.updatePosition();
         },
 
         hide() {
@@ -196,37 +155,20 @@ export default {
             }
         },
 
-        positionHint(left, top) {
-            const hint = this.$refs.hint;
-
-            let right = Math.round(left + hint.offsetWidth) - this.margins;
-
-            left < this.margins && (left = this.margins);
-            right > window.innerWidth && (left -= right - window.innerWidth);
-
-            return `translate3d(${Math.round(left)}px, ${Math.round(top)}px, 0)`;
-        },
-
-        calculatePosition() {
-            const element = this.$refs.element;
-            const hintWindow = this.$refs.hintWindow;
-            const hint = this.$refs.hint;
-
-            const leftPos = offset(element).left;
-            const topPos = offset(element).top + element.offsetHeight;
-
-            if (this.shown) {
-                hintWindow.style.minWidth = Math.round(element.offsetWidth) + 'px';
-                hint.style.transform = this.positionHint(leftPos, topPos);
+        dblSelect(option) {
+            if (this.multiple && Array.isArray(this.value)) {
+                if (this.value.length === 1) {
+                    this.$emit('change', this.options.map(option => option.value));
+                } else {
+                    this.$emit('change', [option.value]);
+                }
             }
         },
 
-        handleOutsideClick(event) {
-            if (this.multiple && checkElClick(this.$refs.hint, event.target)) {
-                return;
-            }
+        handleOutsideClick({ target }) {
+            const { element, hint } = this.$refs;
 
-            if (checkElClick(this.$refs.element, event.target)) {
+            if ((this.multiple && checkElClick(hint.$el, target)) || checkElClick(element, target)) {
                 return;
             }
 
@@ -235,34 +177,12 @@ export default {
     },
 
     mounted() {
-        document.body.appendChild(this.$refs.hint);
         document.body.addEventListener('click', this.handleOutsideClick);
-        window.addEventListener('scroll', this.calculatePosition);
-        window.addEventListener('resize', this.calculatePosition);
-
-        this.$refs.hintBody.addEventListener('scroll', () => {
-            const scrollableEl = this.$refs.hintBody;
-
-            if (this.$refs.hintBody.scrollTop === 0) {
-                this.$refs.scrollerUp.classList.add('hide');
-            } else {
-                this.$refs.scrollerUp.classList.remove('hide');
-            }
-
-            if (scrollableEl.offsetHeight + scrollableEl.scrollTop >= scrollableEl.scrollHeight) {
-                this.$refs.scrollerDown.classList.add('hide');
-            } else {
-                this.$refs.scrollerDown.classList.remove('hide');
-            }
-        });
     },
 
     beforeDestroy() {
-        this.$refs.hint.remove();
         document.body.removeEventListener('click', this.handleOutsideClick);
-        window.removeEventListener('scroll', this.calculatePosition);
-        window.removeEventListener('resize', this.calculatePosition);
-    }
+    },
 };
 </script>
 
